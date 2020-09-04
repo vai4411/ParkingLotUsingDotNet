@@ -5,6 +5,7 @@
 namespace ParkingLotRepositoryLayer
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using Microsoft.Extensions.Configuration;
@@ -167,6 +168,43 @@ namespace ParkingLotRepositoryLayer
 
                         this.conn.Close();
                         return parkingLot;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method used for get empty slots.
+        /// </summary>
+        /// <returns>Get all empty slots.</returns>
+        public List<int> GetAllEmptySlot()
+        {
+            try
+            {
+                using (this.conn)
+                {
+                    List<int> emptySlots = new List<int>();
+                    SqlCommand cmd = new SqlCommand("spGetEmptySlots", this.conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    this.conn.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            Parking parkingLot = new Parking();
+                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
+                            emptySlots.Add(parkingLot.SlotNumber);
+                        }
+
+                        this.conn.Close();
+                        return emptySlots;
                     }
 
                     return null;
