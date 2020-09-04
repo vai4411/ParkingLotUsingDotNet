@@ -17,5 +17,12 @@ namespace ParkingLotRepositoryLayer
         /// <param name="parking">Parking data.</param>
         /// <returns>Boolean result.</returns>
         bool ParkVehicle(Parking parking);
+
+        /// <summary>
+        /// This method used for unpark vehicle in parking lot.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Boolean result.</returns>
+        bool UnParkVehicle(int slotNumber);
     }
 }

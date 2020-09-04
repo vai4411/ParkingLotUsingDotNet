@@ -64,5 +64,36 @@ namespace ParkingLotRepositoryLayer
                 throw new Exception(e.Message);
             }
         }
+
+        /// <summary>
+        /// This method used for unpark vehicle.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Boolean result.</returns>
+        public bool UnParkVehicle(int slotNumber)
+        {
+            try
+            {
+                using (this.conn)
+                {
+                    SqlCommand cmd = new SqlCommand("spUnPark", this.conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Slot_Number", slotNumber);
+                    this.conn.Open();
+                    int result = cmd.ExecuteNonQuery();
+                    this.conn.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
