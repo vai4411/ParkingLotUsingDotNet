@@ -32,5 +32,15 @@ namespace ParkingLotBusinessLayer
         {
             return this.parkingRepository.ParkVehicle(parking);
         }
+
+        /// <summary>
+        /// This method used for for unpark in parking lot.
+        /// </summary>
+        /// <param name="slotNumber">Slot Number.</param>
+        /// <returns>Boolean result.</returns>
+        public bool UnParkVehicle(int slotNumber)
+        {
+            return this.parkingRepository.UnParkVehicle(slotNumber);
+        }
     }
 }
