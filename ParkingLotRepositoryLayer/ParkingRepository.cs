@@ -110,7 +110,7 @@ namespace ParkingLotRepositoryLayer
                     Parking parkingLot = new Parking();
                     SqlCommand cmd = new SqlCommand("spGetVehicleBySlotNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Slot_Number", slotNumber);
+                    cmd.Parameters.AddWithValue("@SlotNumber", slotNumber);
                     this.conn.Open();
                     SqlDataReader sqlDataReader = cmd.ExecuteReader();
                     if (sqlDataReader.HasRows)
@@ -149,7 +149,7 @@ namespace ParkingLotRepositoryLayer
                 using (this.conn)
                 {
                     Parking parkingLot = new Parking();
-                    SqlCommand cmd = new SqlCommand("spGetVehicleBySlotNumber", this.conn);
+                    SqlCommand cmd = new SqlCommand("spGetVehicleByVehicleNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@VehicleNumber", vehicleNumber);
                     this.conn.Open();
