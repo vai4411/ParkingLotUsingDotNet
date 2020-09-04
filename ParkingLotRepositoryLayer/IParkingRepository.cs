@@ -30,6 +30,13 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        Parking GetDetailsByVehicleNumber(int slotNumber);
+        Parking GetDetailsBySlotNumber(int slotNumber);
+
+        /// <summary>
+        /// This method used for get details by vehicle number.
+        /// </summary>
+        /// <param name="vehicleNumber">Vehicle number.</param>
+        /// <returns>Parking details.</returns>
+        Parking GetDetailsByVehicleNumber(string vehicleNumber);
     }
 }

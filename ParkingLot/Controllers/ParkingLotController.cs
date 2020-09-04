@@ -33,7 +33,8 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="parking">Parking object.</param>
         /// <returns>Action result.</returns>
-        [HttpPost("park")]
+        [Route("parkVehicle")]
+        [HttpPost]
         public ActionResult ParkVehicle([FromBody] Parking parking)
         {
             try
@@ -55,14 +56,15 @@ namespace ParkingLot.Controllers
         /// <summary>
         /// This method used for unpark vehicle using post mapping.
         /// </summary>
-        /// <param name="id">Slot number.</param>
+        /// <param name="slotNumber">Slot number.</param>
         /// <returns>Action result.</returns>
-        [HttpPut("unpark/{id}")]
-        public ActionResult UnParkVehicle(int id)
+        [Route("unpark/{id}")]
+        [HttpPut]
+        public ActionResult UnParkVehicle(int slotNumber)
         {
             try
             {
-                bool result = this.parkingService.UnParkVehicle(id);
+                bool result = this.parkingService.UnParkVehicle(slotNumber);
                 if (result == true)
                 {
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));
@@ -81,12 +83,13 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [HttpGet("getVehicle/{slotNumber}")]
+        [Route("getVehicle/{slotNumber}")]
+        [HttpGet]
         public ActionResult GetVehicleBySlotNumber(int slotNumber)
         {
             try
             {
-                Parking parking = this.parkingService.GetDetailsByVehicleNumber(slotNumber);
+                Parking parking = this.parkingService.GetDetailsBySlotNumber(slotNumber);
                 if (!parking.ParkingType.Equals(null))
                 {
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));

@@ -48,7 +48,7 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        public Parking GetDetailsByVehicleNumber(int slotNumber)
+        public Parking GetDetailsBySlotNumber(int slotNumber)
         {
             return this.parkingRepository.GetDetailsByVehicleNumber(slotNumber);
         }

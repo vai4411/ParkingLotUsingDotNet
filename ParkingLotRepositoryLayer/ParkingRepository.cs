@@ -101,16 +101,57 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        public Parking GetDetailsByVehicleNumber(int slotNumber)
+        public Parking GetDetailsBySlotNumber(int slotNumber)
         {
             try
             {
                 using (this.conn)
                 {
                     Parking parkingLot = new Parking();
-                    SqlCommand cmd = new SqlCommand("spGetBySlot", this.conn);
+                    SqlCommand cmd = new SqlCommand("spGetVehicleBySlotNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Slot_Number", slotNumber);
+                    this.conn.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
+                            parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
+                            parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
+                            parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
+                            parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                        }
+
+                        this.conn.Close();
+                        return parkingLot;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// This method used for retrive data from slot number.
+        /// </summary>
+        /// <param name="vehicleNumber">Vehicle number.</param>
+        /// <returns>Parking details.</returns>
+        public Parking GetDetailsByVehicleNumber(string vehicleNumber)
+        {
+            try
+            {
+                using (this.conn)
+                {
+                    Parking parkingLot = new Parking();
+                    SqlCommand cmd = new SqlCommand("spGetVehicleBySlotNumber", this.conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@VehicleNumber", vehicleNumber);
                     this.conn.Open();
                     SqlDataReader sqlDataReader = cmd.ExecuteReader();
                     if (sqlDataReader.HasRows)

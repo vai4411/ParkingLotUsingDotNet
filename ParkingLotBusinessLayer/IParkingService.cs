@@ -30,6 +30,6 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        Parking GetDetailsByVehicleNumber(int slotNumber);
+        Parking GetDetailsBySlotNumber(int slotNumber);
     }
 }
