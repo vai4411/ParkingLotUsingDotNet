@@ -11,6 +11,11 @@ namespace ParkingLotRepositoryLayer
     /// </summary>
     public interface IParkingRepository
     {
-        
+        /// <summary>
+        /// This method used for parking new vehicle in parking lot.
+        /// </summary>
+        /// <param name="parking">Parking data.</param>
+        /// <returns>Boolean result.</returns>
+        bool ParkVehicle(Parking parking);
     }
 }
