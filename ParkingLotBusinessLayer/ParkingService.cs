@@ -42,5 +42,15 @@ namespace ParkingLotBusinessLayer
         {
             return this.parkingRepository.UnParkVehicle(slotNumber);
         }
+
+        /// <summary>
+        /// This method used for retrive data from slot number.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        public Parking GetDetailsByVehicleNumber(int slotNumber)
+        {
+            return this.GetDetailsByVehicleNumber(slotNumber);
+        }
     }
 }
