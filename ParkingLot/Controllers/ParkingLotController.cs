@@ -34,7 +34,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="parking">Parking object.</param>
         /// <returns>Action result.</returns>
-        [Route("parkVehicle")]
+        [Route("ParkVehicle")]
         [HttpPost]
         public ActionResult ParkVehicle([FromBody] Parking parking)
         {
@@ -59,7 +59,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Action result.</returns>
-        [Route("unpark/{id}")]
+        [Route("Unpark/{id}")]
         [HttpPut]
         public ActionResult UnParkVehicle(int slotNumber)
         {
@@ -84,7 +84,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [Route("searchVehicle/{slotNumber}")]
+        [Route("SearchVehicle/{slotNumber}")]
         [HttpGet]
         public ActionResult GetVehicleBySlotNumber(int slotNumber)
         {
@@ -109,7 +109,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("searchVehicle/{vehicleNumber}")]
+        [Route("SearchVehicle/{vehicleNumber}")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {
@@ -133,7 +133,7 @@ namespace ParkingLot.Controllers
         /// This method used for get empty slots using get mapping.
         /// </summary>
         /// <returns>List of empty slots.</returns>
-        [Route("emptySlots")]
+        [Route("EmptySlots")]
         [HttpGet]
         public ActionResult GetEmptySlots()
         {
@@ -146,6 +146,30 @@ namespace ParkingLot.Controllers
                 }
 
                 return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Empty slots not found", emptySlots));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { success = false, message = e.Message });
+            }
+        }
+
+        /// <summary>
+        /// This method used for get all parking vehicles data using get mapping.
+        /// </summary>
+        /// <returns>All parking vehicles data.</returns>
+        [Route("GetAllVehicleDetails")]
+        [HttpGet]
+        public ActionResult GetAllParkingVehiclesData()
+        {
+            try
+            {
+                List<Parking> vehiclesdata = this.parkingService.GetAllParkingVehiclesData();
+                if (vehiclesdata.Count > 0)
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "All parking vehicles record found", vehiclesdata));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "No record found", vehiclesdata));
             }
             catch (Exception e)
             {
