@@ -4,6 +4,7 @@
 
 namespace ParkingLotBusinessLayer
 {
+    using System.Collections.Generic;
     using ParkingLotModelLayer;
 
     /// <summary>
@@ -38,5 +39,11 @@ namespace ParkingLotBusinessLayer
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
         Parking GetDetailsByVehicleNumber(string vehicleNumber);
+
+        /// <summary>
+        /// This method used for get empty slots.
+        /// </summary>
+        /// <returns>Get all empty slots.</returns>
+        List<int> GetAllEmptySlot();
     }
 }
