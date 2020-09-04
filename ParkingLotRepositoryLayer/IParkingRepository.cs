@@ -45,5 +45,11 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <returns>Get all empty slots.</returns>
         List<int> GetAllEmptySlot();
+
+        /// <summary>
+        /// This method used for get parking vehicles data.
+        /// </summary>
+        /// <returns>Get all parking vehicles data.</returns>
+        List<Parking> GetAllParkingVehiclesData();
     }
 }

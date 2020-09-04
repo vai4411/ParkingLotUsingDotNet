@@ -215,5 +215,46 @@ namespace ParkingLotRepositoryLayer
                 throw new Exception(e.Message);
             }
         }
+
+        /// <summary>
+        /// This method used for get all parking vehicles data.
+        /// </summary>
+        /// <returns>All parking vehicles data.</returns>
+        public List<Parking> GetAllParkingVehiclesData()
+        {
+            try
+            {
+                using (this.conn)
+                {
+                    List<Parking> parkingData = new List<Parking>();
+                    SqlCommand cmd = new SqlCommand("spGetParkingVehiclesData", this.conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    this.conn.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            Parking parkingLot = new Parking();
+                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
+                            parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
+                            parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
+                            parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
+                            parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                            parkingData.Add(parkingLot);
+                        }
+
+                        this.conn.Close();
+                        return parkingData;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
