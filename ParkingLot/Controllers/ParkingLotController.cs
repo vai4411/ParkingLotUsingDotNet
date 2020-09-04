@@ -5,6 +5,7 @@
 namespace ParkingLot.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using Microsoft.AspNetCore.Mvc;
     using ParkingLotBusinessLayer;
@@ -121,6 +122,30 @@ namespace ParkingLot.Controllers
                 }
 
                 return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { success = false, message = e.Message });
+            }
+        }
+
+        /// <summary>
+        /// This method used for get empty slots using get mapping.
+        /// </summary>
+        /// <returns>List of empty slots.</returns>
+        [Route("emptySlots")]
+        [HttpGet]
+        public ActionResult GetEmptySlots()
+        {
+            try
+            {
+                List<int> emptySlots = this.parkingService.GetAllEmptySlot();
+                if (emptySlots.Count > 0)
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Empty slots found", emptySlots));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Empty slots not found", emptySlots));
             }
             catch (Exception e)
             {
