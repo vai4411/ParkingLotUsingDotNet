@@ -51,5 +51,29 @@ namespace ParkingLot.Controllers
                 return this.BadRequest(new { success = false, message = e.Message });
             }
         }
+
+        /// <summary>
+        /// This method used for unpark vehicle using post mapping.
+        /// </summary>
+        /// <param name="id">Slot number.</param>
+        /// <returns>Action result.</returns>
+        [HttpPut("{id}")]
+        public ActionResult UnParkVehicle(int id)
+        {
+            try
+            {
+                bool result = this.parkingService.UnParkVehicle(id);
+                if (result == true)
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { success = false, message = e.Message });
+            }
+        }
     }
 }
