@@ -33,7 +33,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="parking">Parking object.</param>
         /// <returns>Action result.</returns>
-        [HttpPost]
+        [HttpPost("park")]
         public ActionResult ParkVehicle([FromBody] Parking parking)
         {
             try
@@ -57,7 +57,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="id">Slot number.</param>
         /// <returns>Action result.</returns>
-        [HttpPut("{id}")]
+        [HttpPut("unpark/{id}")]
         public ActionResult UnParkVehicle(int id)
         {
             try
@@ -69,6 +69,30 @@ namespace ParkingLot.Controllers
                 }
 
                 return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { success = false, message = e.Message });
+            }
+        }
+
+        /// <summary>
+        /// This method used for get vehicle by slot number using get mapping.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        [HttpGet("getVehicle/{slotNumber}")]
+        public ActionResult GetVehicleBySlotNumber(int slotNumber)
+        {
+            try
+            {
+                Parking parking = this.parkingService.GetDetailsByVehicleNumber(slotNumber);
+                if (!parking.ParkingType.Equals(null))
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
             }
             catch (Exception e)
             {

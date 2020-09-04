@@ -117,11 +117,11 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
-                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["Parking_Slot"]);
-                            parkingLot.VehicleNumber = sqlDataReader["Vehicle_Number"].ToString();
-                            parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["Parking_Type"]);
-                            parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["Vehicle_Type"]);
-                            parkingLot.DriverType = Convert.ToInt32(sqlDataReader["Driver_Type"]);
+                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
+                            parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
+                            parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
+                            parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
+                            parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
                         }
 
                         this.conn.Close();

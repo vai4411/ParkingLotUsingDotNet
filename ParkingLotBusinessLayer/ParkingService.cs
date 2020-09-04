@@ -50,7 +50,7 @@ namespace ParkingLotBusinessLayer
         /// <returns>Parking details.</returns>
         public Parking GetDetailsByVehicleNumber(int slotNumber)
         {
-            return this.GetDetailsByVehicleNumber(slotNumber);
+            return this.parkingRepository.GetDetailsByVehicleNumber(slotNumber);
         }
     }
 }
