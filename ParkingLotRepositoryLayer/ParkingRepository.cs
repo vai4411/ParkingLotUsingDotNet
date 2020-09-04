@@ -95,5 +95,46 @@ namespace ParkingLotRepositoryLayer
                 throw new Exception(e.Message);
             }
         }
+
+        /// <summary>
+        /// This method used for retrive data from slot number.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        public Parking GetDetailsByVehicleNumber(int slotNumber)
+        {
+            try
+            {
+                using (this.conn)
+                {
+                    Parking parkingLot = new Parking();
+                    SqlCommand cmd = new SqlCommand("spGetBySlot", this.conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Slot_Number", slotNumber);
+                    this.conn.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["Parking_Slot"]);
+                            parkingLot.VehicleNumber = sqlDataReader["Vehicle_Number"].ToString();
+                            parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["Parking_Type"]);
+                            parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["Vehicle_Type"]);
+                            parkingLot.DriverType = Convert.ToInt32(sqlDataReader["Driver_Type"]);
+                        }
+
+                        this.conn.Close();
+                        return parkingLot;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
