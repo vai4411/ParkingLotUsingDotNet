@@ -4,9 +4,9 @@
 
 namespace ParkingLotBusinessLayer
 {
+    using System.Collections.Generic;
     using ParkingLotModelLayer;
     using ParkingLotRepositoryLayer;
-    using System.Collections.Generic;
 
     /// <summary>
     ///  This class used for parking service.
@@ -71,6 +71,15 @@ namespace ParkingLotBusinessLayer
         public List<int> GetAllEmptySlot()
         {
             return this.parkingRepository.GetAllEmptySlot();
+        }
+
+        /// <summary>
+        /// This method used for get parking vehicles data.
+        /// </summary>
+        /// <returns>All parking vehicles data.</returns>
+        public List<Parking> GetAllParkingVehiclesData()
+        {
+            return this.parkingRepository.GetAllParkingVehiclesData();
         }
     }
 }

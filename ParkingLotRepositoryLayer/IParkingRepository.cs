@@ -49,7 +49,7 @@ namespace ParkingLotRepositoryLayer
         /// <summary>
         /// This method used for get parking vehicles data.
         /// </summary>
-        /// <returns>Get all parking vehicles data.</returns>
+        /// <returns>All parking vehicles data.</returns>
         List<Parking> GetAllParkingVehiclesData();
     }
 }
