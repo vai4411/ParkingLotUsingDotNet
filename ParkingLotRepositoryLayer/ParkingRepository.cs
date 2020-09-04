@@ -138,7 +138,7 @@ namespace ParkingLotRepositoryLayer
         }
 
         /// <summary>
-        /// This method used for retrive data from slot number.
+        /// This method used for retrive data from vehicle number.
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
