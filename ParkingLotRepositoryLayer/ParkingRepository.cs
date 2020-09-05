@@ -47,8 +47,8 @@ namespace ParkingLotRepositoryLayer
             parkingDetails.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
             parkingDetails.EntryTime = sqlDataReader["Entry_Time"].ToString();
             parkingDetails.ExitTime = sqlDataReader["Exit_Time"].ToString();
-            parkingDetails.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
-            parkingDetails.VehicleColor = sqlDataReader["Vehicle_Color"].ToString();
+            parkingDetails.VehicleColor = sqlDataReader["VEHICLE_COLOR"].ToString();
+            parkingDetails.ParkingCharge = sqlDataReader["PARKING_CHARGE"].ToString();
             return parkingDetails;
         }
 

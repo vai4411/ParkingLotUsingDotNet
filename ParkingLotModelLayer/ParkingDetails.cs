@@ -57,6 +57,6 @@ namespace ParkingLotModelLayer
         /// <summary>
         /// Gets or sets method for parking charge.
         /// </summary>
-        public int ParkingCharge { get; set; }
+        public string ParkingCharge { get; set; }
     }
 }
