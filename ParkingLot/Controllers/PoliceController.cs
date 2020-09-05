@@ -1,4 +1,4 @@
-﻿// <copyright file="DriverController.cs" company="Bridgelabz">
+﻿// <copyright file="PoliceController.cs" company="Bridgelabz">
 // Copyright (c) Bridgelabz. All rights reserved.
 // </copyright>
 
@@ -11,19 +11,19 @@ namespace ParkingLot.Controllers
     using ParkingLotModelLayer;
 
     /// <summary>
-    /// This class used for parking lot driver controller.
+    /// This class used for parking lot police controller.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class DriverController : ControllerBase
+    public class PoliceController : ControllerBase
     {
         private readonly IParkingService parkingService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DriverController"/> class.
+        /// Initializes a new instance of the <see cref="PoliceController"/> class.
         /// </summary>
         /// <param name="parkingService">Parking service.</param>
-        public DriverController(IParkingService parkingService)
+        public PoliceController(IParkingService parkingService)
         {
             this.parkingService = parkingService;
         }
@@ -50,31 +50,6 @@ namespace ParkingLot.Controllers
             catch (Exception e)
             {
                 return this.BadRequest(new { success = false, message = e.Message });
-            }
-        }
-
-        /// <summary>
-        /// This method used for unpark vehicle using post mapping.
-        /// </summary>
-        /// <param name="slotNumber">Slot number.</param>
-        /// <returns>Action result.</returns>
-        [Route("Unpark")]
-        [HttpPut]
-        public ActionResult UnParkVehicle(int slotNumber)
-        {
-            try
-            {
-                ParkingDetails result = this.parkingService.UnParkVehicle(slotNumber);
-                if (result == null)
-                {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
-                }
-
-                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));
-            }
-            catch (Exception e)
-            {
-                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
     }
