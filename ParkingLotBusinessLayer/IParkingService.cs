@@ -51,5 +51,12 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <returns>All parking vehicles data.</returns>
         List<ParkingDetails> GetAllParkingVehiclesData();
+
+        /// <summary>
+        /// This method used for get details by vehicle number.
+        /// </summary>
+        /// <param name="vehicleColor">Vehicle color.</param>
+        /// <returns>Parking details.</returns>
+        List<ParkingDetails> GetDetailsByVehicleColor(string vehicleColor);
     }
 }

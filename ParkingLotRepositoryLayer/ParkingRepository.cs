@@ -274,13 +274,13 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="vehicleColor">Vehicle color.</param>
         /// <returns>Parking details.</returns>
-        public ParkingDetails GetDetailsByVehicleColor(string vehicleColor)
+        public List<ParkingDetails> GetDetailsByVehicleColor(string vehicleColor)
         {
             try
             {
                 using (this.conn)
                 {
-                    ParkingDetails parkingDetails = new ParkingDetails();
+                    List<ParkingDetails> parkingData = new List<ParkingDetails>();
                     SqlCommand cmd = new SqlCommand("spGetVehicleByVehicleColor", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Vehicle_Color", vehicleColor);
@@ -290,11 +290,13 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
+                            ParkingDetails parkingDetails = new ParkingDetails();
                             parkingDetails = this.VehicleDetails(sqlDataReader);
+                            parkingData.Add(parkingDetails);
                         }
 
                         this.conn.Close();
-                        return parkingDetails;
+                        return parkingData;
                     }
 
                     return null;

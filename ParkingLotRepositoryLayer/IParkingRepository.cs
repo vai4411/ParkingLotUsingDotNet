@@ -57,6 +57,6 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="vehicleColor">Vehicle color.</param>
         /// <returns>Parking details.</returns>
-        ParkingDetails GetDetailsByVehicleColor(string vehicleColor);
+        List<ParkingDetails> GetDetailsByVehicleColor(string vehicleColor);
     }
 }
