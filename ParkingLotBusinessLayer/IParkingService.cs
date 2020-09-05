@@ -31,14 +31,14 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        Parking GetDetailsBySlotNumber(int slotNumber);
+        ParkingDetails GetDetailsBySlotNumber(int slotNumber);
 
         /// <summary>
         /// This method used for get details by vehicle number.
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        Parking GetDetailsByVehicleNumber(string vehicleNumber);
+        ParkingDetails GetDetailsByVehicleNumber(string vehicleNumber);
 
         /// <summary>
         /// This method used for get empty slots.
@@ -50,6 +50,6 @@ namespace ParkingLotBusinessLayer
         /// This method used for get parking vehicles data.
         /// </summary>
         /// <returns>All parking vehicles data.</returns>
-        List<Parking> GetAllParkingVehiclesData();
+        List<ParkingDetails> GetAllParkingVehiclesData();
     }
 }

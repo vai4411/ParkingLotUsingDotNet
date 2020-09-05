@@ -1,4 +1,4 @@
-﻿// <copyright file="ParkingLotController.cs" company="Bridgelabz">
+﻿// <copyright file="OwnerController.cs" company="Bridgelabz">
 // Copyright (c) Bridgelabz. All rights reserved.
 // </copyright>
 
@@ -16,15 +16,15 @@ namespace ParkingLot.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ParkingLotController : ControllerBase
+    public class OwnerController : ControllerBase
     {
         private readonly IParkingService parkingService;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ParkingLotController"/> class.
+        /// Initializes a new instance of the <see cref="OwnerController"/> class.
         /// </summary>
         /// <param name="parkingService">Parking service.</param>
-        public ParkingLotController(IParkingService parkingService)
+        public OwnerController(IParkingService parkingService)
         {
             this.parkingService = parkingService;
         }
@@ -59,7 +59,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Action result.</returns>
-        [Route("Unpark/{id}")]
+        [Route("Unpark")]
         [HttpPut]
         public ActionResult UnParkVehicle(int slotNumber)
         {
@@ -84,13 +84,13 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicle/{slotNumber}")]
+        [Route("SearchVehicleBySlotNumber")]
         [HttpGet]
         public ActionResult GetVehicleBySlotNumber(int slotNumber)
         {
             try
             {
-                Parking parking = this.parkingService.GetDetailsBySlotNumber(slotNumber);
+                ParkingDetails parking = this.parkingService.GetDetailsBySlotNumber(slotNumber);
                 if (!parking.ParkingType.Equals(null))
                 {
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
@@ -109,13 +109,13 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicle/{vehicleNumber}")]
+        [Route("SearchVehicleByVehicleNumber")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {
             try
             {
-                Parking parking = this.parkingService.GetDetailsByVehicleNumber(vehicleNumber);
+                ParkingDetails parking = this.parkingService.GetDetailsByVehicleNumber(vehicleNumber);
                 if (!parking.ParkingType.Equals(null))
                 {
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
@@ -163,7 +163,7 @@ namespace ParkingLot.Controllers
         {
             try
             {
-                List<Parking> vehiclesdata = this.parkingService.GetAllParkingVehiclesData();
+                List<ParkingDetails> vehiclesdata = this.parkingService.GetAllParkingVehiclesData();
                 if (vehiclesdata.Count > 0)
                 {
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "All parking vehicles record found", vehiclesdata));

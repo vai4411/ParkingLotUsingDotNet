@@ -49,7 +49,7 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        public Parking GetDetailsBySlotNumber(int slotNumber)
+        public ParkingDetails GetDetailsBySlotNumber(int slotNumber)
         {
             return this.parkingRepository.GetDetailsBySlotNumber(slotNumber);
         }
@@ -59,7 +59,7 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        public Parking GetDetailsByVehicleNumber(string vehicleNumber)
+        public ParkingDetails GetDetailsByVehicleNumber(string vehicleNumber)
         {
             return this.parkingRepository.GetDetailsByVehicleNumber(vehicleNumber);
         }
@@ -77,7 +77,7 @@ namespace ParkingLotBusinessLayer
         /// This method used for get parking vehicles data.
         /// </summary>
         /// <returns>All parking vehicles data.</returns>
-        public List<Parking> GetAllParkingVehiclesData()
+        public List<ParkingDetails> GetAllParkingVehiclesData()
         {
             return this.parkingRepository.GetAllParkingVehiclesData();
         }

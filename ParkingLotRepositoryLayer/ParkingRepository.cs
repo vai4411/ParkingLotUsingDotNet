@@ -102,13 +102,13 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        public Parking GetDetailsBySlotNumber(int slotNumber)
+        public ParkingDetails GetDetailsBySlotNumber(int slotNumber)
         {
             try
             {
                 using (this.conn)
                 {
-                    Parking parkingLot = new Parking();
+                    ParkingDetails parkingLot = new ParkingDetails();
                     SqlCommand cmd = new SqlCommand("spGetVehicleBySlotNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@SlotNumber", slotNumber);
@@ -118,11 +118,15 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
+                            parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
                             parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
                             parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
                             parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
                             parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
                             parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                            parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
+                            parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
+                            parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
                         }
 
                         this.conn.Close();
@@ -143,13 +147,13 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        public Parking GetDetailsByVehicleNumber(string vehicleNumber)
+        public ParkingDetails GetDetailsByVehicleNumber(string vehicleNumber)
         {
             try
             {
                 using (this.conn)
                 {
-                    Parking parkingLot = new Parking();
+                    ParkingDetails parkingLot = new ParkingDetails();
                     SqlCommand cmd = new SqlCommand("spGetVehicleByVehicleNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@VehicleNumber", vehicleNumber);
@@ -159,11 +163,15 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
+                            parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
                             parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
                             parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
                             parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
                             parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
                             parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                            parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
+                            parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
+                            parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
                         }
 
                         this.conn.Close();
@@ -220,13 +228,13 @@ namespace ParkingLotRepositoryLayer
         /// This method used for get all parking vehicles data.
         /// </summary>
         /// <returns>All parking vehicles data.</returns>
-        public List<Parking> GetAllParkingVehiclesData()
+        public List<ParkingDetails> GetAllParkingVehiclesData()
         {
             try
             {
                 using (this.conn)
                 {
-                    List<Parking> parkingData = new List<Parking>();
+                    List<ParkingDetails> parkingData = new List<ParkingDetails>();
                     SqlCommand cmd = new SqlCommand("spGetParkingVehiclesData", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     this.conn.Open();
@@ -235,12 +243,16 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
-                            Parking parkingLot = new Parking();
+                            ParkingDetails parkingLot = new ParkingDetails();
+                            parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
                             parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
                             parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
                             parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
                             parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
                             parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                            parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
+                            parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
+                            parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
                             parkingData.Add(parkingLot);
                         }
 

@@ -21,7 +21,7 @@ namespace ParkingLotModelLayer
         /// Gets or sets method for vehicle number.
         /// </summary>
         [Required(ErrorMessage = "Vehicle number is required")]
-        [RegularExpression(@"[A-z]{2}[ ]?[0-9]{2}[ ]?[0-9]{2,}", ErrorMessage = "Please enter valid vehicle number")]
+        [RegularExpression(@"[A-Z]{2}[ ]?[0-9]{2}[ ]?[0-9]{2,}", ErrorMessage = "Please enter valid vehicle number")]
         public string VehicleNumber { get; set; }
 
         /// <summary>
