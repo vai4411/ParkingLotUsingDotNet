@@ -45,6 +45,11 @@ namespace ParkingLotModelLayer
         public int DriverType { get; set; }
 
         /// <summary>
+        /// Gets or sets method for vehicle color.
+        /// </summary>
+        public string VehicleColor { get; set; }
+
+        /// <summary>
         /// Gets or sets method for exit time.
         /// </summary>
         public string ExitTime { get; set; }
