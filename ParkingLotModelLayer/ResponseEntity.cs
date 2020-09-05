@@ -38,5 +38,16 @@ namespace ParkingLotModelLayer
             this.Message = message;
             this.Data = data;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResponseEntity"/> class.
+        /// </summary>
+        /// <param name="statusCode">Http status code.</param>
+        /// <param name="message">String message.</param>
+        public ResponseEntity(HttpStatusCode statusCode, string message)
+        {
+            this.HttpStatusCode = statusCode;
+            this.Message = message;
+        }
     }
 }

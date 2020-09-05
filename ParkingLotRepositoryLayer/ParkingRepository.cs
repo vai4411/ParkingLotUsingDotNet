@@ -19,6 +19,7 @@ namespace ParkingLotRepositoryLayer
         private readonly string connectionString;
         private readonly SqlConnection conn;
         private readonly IConfiguration configuration;
+        private readonly ParkingDetails parkingLot;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParkingRepository"/> class.
@@ -29,14 +30,15 @@ namespace ParkingLotRepositoryLayer
             this.configuration = configuration;
             this.connectionString = this.configuration.GetSection("ConnectionStrings").GetSection("ParkingLotDBConnection").Value;
             this.conn = new SqlConnection(this.connectionString);
+            this.parkingLot = new ParkingDetails();
         }
 
         /// <summary>
         /// This method used for park vehicle.
         /// </summary>
         /// <param name="parking">Parking object.</param>
-        /// <returns>Boolean result.</returns>
-        public bool ParkVehicle(Parking parking)
+        /// <returns>Parking <see cref="object"/>.</returns>
+        public Parking ParkVehicle(Parking parking)
         {
             try
             {
@@ -51,13 +53,12 @@ namespace ParkingLotRepositoryLayer
                     cmd.Parameters.AddWithValue("@Driver_Type", parking.DriverType);
                     this.conn.Open();
                     int result = cmd.ExecuteNonQuery();
-                    this.conn.Close();
                     if (result != 0)
                     {
-                        return true;
+                        return parking;
                     }
 
-                    return false;
+                    return null;
                 }
             }
             catch (Exception e)
@@ -71,7 +72,7 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Boolean result.</returns>
-        public bool UnParkVehicle(int slotNumber)
+        public ParkingDetails UnParkVehicle(int slotNumber)
         {
             try
             {
@@ -81,14 +82,27 @@ namespace ParkingLotRepositoryLayer
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Slot_Number", slotNumber);
                     this.conn.Open();
-                    int result = cmd.ExecuteNonQuery();
-                    this.conn.Close();
-                    if (result != 0)
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
                     {
-                        return true;
+                        while (sqlDataReader.Read())
+                        {
+                            this.parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
+                            this.parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
+                            this.parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
+                            this.parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
+                            this.parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
+                            this.parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                            this.parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
+                            this.parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
+                            this.parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
+                        }
+
+                        this.conn.Close();
+                        return this.parkingLot;
                     }
 
-                    return false;
+                    return null;
                 }
             }
             catch (Exception e)
@@ -108,7 +122,6 @@ namespace ParkingLotRepositoryLayer
             {
                 using (this.conn)
                 {
-                    ParkingDetails parkingLot = new ParkingDetails();
                     SqlCommand cmd = new SqlCommand("spGetVehicleBySlotNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@SlotNumber", slotNumber);
@@ -118,19 +131,19 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
-                            parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
-                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
-                            parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
-                            parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
-                            parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
-                            parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
-                            parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
-                            parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
-                            parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
+                            this.parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
+                            this.parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
+                            this.parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
+                            this.parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
+                            this.parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
+                            this.parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                            this.parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
+                            this.parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
+                            this.parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
                         }
 
                         this.conn.Close();
-                        return parkingLot;
+                        return this.parkingLot;
                     }
 
                     return null;
@@ -153,7 +166,6 @@ namespace ParkingLotRepositoryLayer
             {
                 using (this.conn)
                 {
-                    ParkingDetails parkingLot = new ParkingDetails();
                     SqlCommand cmd = new SqlCommand("spGetVehicleByVehicleNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@VehicleNumber", vehicleNumber);
@@ -163,19 +175,19 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
-                            parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
-                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
-                            parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
-                            parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
-                            parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
-                            parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
-                            parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
-                            parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
-                            parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
+                            this.parkingLot.ParkingId = Convert.ToInt32(sqlDataReader["PARKING_ID"]);
+                            this.parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
+                            this.parkingLot.VehicleNumber = sqlDataReader["VEHICLE_NUMBER"].ToString();
+                            this.parkingLot.ParkingType = Convert.ToInt32(sqlDataReader["PARKING_TYPE"]);
+                            this.parkingLot.VehicleType = Convert.ToInt32(sqlDataReader["VEHICLE_TYPE"]);
+                            this.parkingLot.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
+                            this.parkingLot.EntryTime = sqlDataReader["Entry_Time"].ToString();
+                            this.parkingLot.ExitTime = sqlDataReader["Exit_Time"].ToString();
+                            this.parkingLot.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
                         }
 
                         this.conn.Close();
-                        return parkingLot;
+                        return this.parkingLot;
                     }
 
                     return null;
@@ -206,9 +218,7 @@ namespace ParkingLotRepositoryLayer
                     {
                         while (sqlDataReader.Read())
                         {
-                            Parking parkingLot = new Parking();
-                            parkingLot.SlotNumber = Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]);
-                            emptySlots.Add(parkingLot.SlotNumber);
+                            emptySlots.Add(Convert.ToInt32(sqlDataReader["SLOT_NUMBER"]));
                         }
 
                         this.conn.Close();

@@ -40,13 +40,13 @@ namespace ParkingLot.Controllers
         {
             try
             {
-                bool result = this.parkingService.ParkVehicle(parking);
-                if (result == true)
+                Parking result = this.parkingService.ParkVehicle(parking);
+                if (result.Equals(null))
                 {
-                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle parked successfully", result));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle parked successfully", result));
             }
             catch (Exception e)
             {
@@ -65,17 +65,17 @@ namespace ParkingLot.Controllers
         {
             try
             {
-                bool result = this.parkingService.UnParkVehicle(slotNumber);
-                if (result == true)
+                ParkingDetails result = this.parkingService.UnParkVehicle(slotNumber);
+                if (result == null)
                 {
-                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));
             }
             catch (Exception e)
             {
-                return this.BadRequest(new { success = false, message = e.Message });
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
 

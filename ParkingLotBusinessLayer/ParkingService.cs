@@ -29,7 +29,7 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="parking">Parking data.</param>
         /// <returns>Boolean result.</returns>
-        public bool ParkVehicle(Parking parking)
+        public Parking ParkVehicle(Parking parking)
         {
             return this.parkingRepository.ParkVehicle(parking);
         }
@@ -39,7 +39,7 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="slotNumber">Slot Number.</param>
         /// <returns>Boolean result.</returns>
-        public bool UnParkVehicle(int slotNumber)
+        public ParkingDetails UnParkVehicle(int slotNumber)
         {
             return this.parkingRepository.UnParkVehicle(slotNumber);
         }
