@@ -12,7 +12,7 @@ namespace ParkingLot.Controllers
     using ParkingLotModelLayer;
 
     /// <summary>
-    /// This class used for parking lot controller.
+    /// This class used for parking lot owner controller.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
