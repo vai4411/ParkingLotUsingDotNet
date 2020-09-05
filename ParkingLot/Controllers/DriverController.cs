@@ -14,7 +14,7 @@ namespace ParkingLot.Controllers
     /// <summary>
     /// This class used for parking lot driver controller.
     /// </summary>
-    /// [Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class DriverController : ControllerBase
     {
@@ -51,6 +51,31 @@ namespace ParkingLot.Controllers
             catch (Exception e)
             {
                 return this.BadRequest(new { success = false, message = e.Message });
+            }
+        }
+
+        /// <summary>
+        /// This method used for unpark vehicle using post mapping.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Action result.</returns>
+        [Route("Unpark")]
+        [HttpPut]
+        public ActionResult UnParkVehicle(int slotNumber)
+        {
+            try
+            {
+                ParkingDetails result = this.parkingService.UnParkVehicle(slotNumber);
+                if (result == null)
+                {
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+                }
+
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
     }
