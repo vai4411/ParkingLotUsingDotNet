@@ -41,7 +41,7 @@ namespace ParkingLot.Controllers
             try
             {
                 Parking result = this.parkingService.ParkVehicle(parking);
-                if (result.Equals(null))
+                if (result == null)
                 {
                     return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
                 }
@@ -91,12 +91,12 @@ namespace ParkingLot.Controllers
             try
             {
                 ParkingDetails parking = this.parkingService.GetDetailsBySlotNumber(slotNumber);
-                if (!parking.ParkingType.Equals(null))
+                if (parking == null)
                 {
-                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
             }
             catch (Exception e)
             {
@@ -116,12 +116,12 @@ namespace ParkingLot.Controllers
             try
             {
                 ParkingDetails parking = this.parkingService.GetDetailsByVehicleNumber(vehicleNumber);
-                if (!parking.ParkingType.Equals(null))
+                if (parking == null)
                 {
-                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
             }
             catch (Exception e)
             {

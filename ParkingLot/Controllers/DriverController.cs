@@ -40,7 +40,7 @@ namespace ParkingLot.Controllers
             try
             {
                 Parking result = this.parkingService.ParkVehicle(parking);
-                if (result.Equals(null))
+                if (result == null)
                 {
                     return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
                 }

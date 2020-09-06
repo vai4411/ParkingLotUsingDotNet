@@ -41,7 +41,7 @@ namespace ParkingLot.Controllers
             try
             {
                 Parking result = this.parkingService.ParkVehicle(parking);
-                if (result.Equals(null))
+                if (result == null)
                 {
                     return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
                 }
@@ -93,10 +93,10 @@ namespace ParkingLot.Controllers
                 ParkingDetails parking = this.parkingService.GetDetailsByVehicleNumber(vehicleNumber);
                 if (parking == null)
                 {
-                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace ParkingLot.Controllers
             try
             {
                 List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleColor(vehicleColor);
-                if (parking == null)
+                if (parking.Count > 0)
                 {
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
                 }
@@ -136,17 +136,67 @@ namespace ParkingLot.Controllers
         /// <returns>Parking details.</returns>
         [Route("SearchVehicleByVehicleType")]
         [HttpGet]
-        public ActionResult GetVehicleByVehicleColor(int vehicleType)
+        public ActionResult GetVehicleByVehicleType(int vehicleType)
         {
             try
             {
                 List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleType(vehicleType);
-                if (parking == null)
+                if (parking.Count > 0)
                 {
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle color again", parking));
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle type again", parking));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
+            }
+        }
+
+        /// <summary>
+        /// This method used for get vehicle by slot number using get mapping.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        [Route("SearchVehicleBySlotNumber")]
+        [HttpGet]
+        public ActionResult GetVehicleBySlotNumber(int slotNumber)
+        {
+            try
+            {
+                ParkingDetails parking = this.parkingService.GetDetailsBySlotNumber(slotNumber);
+                if (parking == null)
+                {
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                }
+
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
+            }
+        }
+
+        /// <summary>
+        /// This method used for get vehicle count by vehicle color using get mapping.
+        /// </summary>
+        /// <param name="vehicleColor">Vehicle color.</param>
+        /// <returns>Count of vehicles.</returns>
+        [Route("CountByVehicleColor")]
+        [HttpGet]
+        public ActionResult GetTotalVehicleCountByVehicleColor(string vehicleColor)
+        {
+            try
+            {
+                List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleColor(vehicleColor);
+                if (parking.Count > 0)
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking.Count));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle color again", parking.Count));
             }
             catch (Exception e)
             {
