@@ -128,5 +128,30 @@ namespace ParkingLot.Controllers
                 return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
+
+        /// <summary>
+        /// This method used for get vehicle by vehicle type using get mapping.
+        /// </summary>
+        /// <param name="vehicleType">Vehicle type.</param>
+        /// <returns>Parking details.</returns>
+        [Route("SearchVehicleByVehicleType")]
+        [HttpGet]
+        public ActionResult GetVehicleByVehicleType(int vehicleType)
+        {
+            try
+            {
+                List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleType(vehicleType);
+                if (parking.Count > 0)
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle type again", parking));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
+            }
+        }
     }
 }
