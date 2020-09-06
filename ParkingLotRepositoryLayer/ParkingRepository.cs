@@ -307,5 +307,44 @@ namespace ParkingLotRepositoryLayer
                 throw new Exception(e.Message);
             }
         }
+
+        /// <summary>
+        /// This method used for get details by vehicle type.
+        /// </summary>
+        /// <param name="vehicleType">Vehicle type.</param>
+        /// <returns>Parking details.</returns>
+        public List<ParkingDetails> GetDetailsByVehicleType(int vehicleType)
+        {
+            try
+            {
+                using (this.conn)
+                {
+                    List<ParkingDetails> parkingData = new List<ParkingDetails>();
+                    SqlCommand cmd = new SqlCommand("spGetVehicleByVehicleType", this.conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Vehicle_Type", vehicleType);
+                    this.conn.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            ParkingDetails parkingDetails = new ParkingDetails();
+                            parkingDetails = this.VehicleDetails(sqlDataReader);
+                            parkingData.Add(parkingDetails);
+                        }
+
+                        this.conn.Close();
+                        return parkingData;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

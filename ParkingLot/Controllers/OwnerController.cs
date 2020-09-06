@@ -50,7 +50,7 @@ namespace ParkingLot.Controllers
             }
             catch (Exception e)
             {
-                return this.BadRequest(new { success = false, message = e.Message });
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
 
@@ -100,7 +100,7 @@ namespace ParkingLot.Controllers
             }
             catch (Exception e)
             {
-                return this.BadRequest(new { success = false, message = e.Message });
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
 
@@ -125,7 +125,7 @@ namespace ParkingLot.Controllers
             }
             catch (Exception e)
             {
-                return this.BadRequest(new { success = false, message = e.Message });
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
 
@@ -149,7 +149,7 @@ namespace ParkingLot.Controllers
             }
             catch (Exception e)
             {
-                return this.BadRequest(new { success = false, message = e.Message });
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
 
@@ -173,7 +173,7 @@ namespace ParkingLot.Controllers
             }
             catch (Exception e)
             {
-                return this.BadRequest(new { success = false, message = e.Message });
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
     }
