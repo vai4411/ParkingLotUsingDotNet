@@ -178,5 +178,30 @@ namespace ParkingLot.Controllers
                 return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
+
+        /// <summary>
+        /// This method used for get vehicle count by vehicle color using get mapping.
+        /// </summary>
+        /// <param name="vehicleColor">Vehicle color.</param>
+        /// <returns>Count of vehicles.</returns>
+        [Route("CountByVehicleColor")]
+        [HttpGet]
+        public ActionResult GetTotalVehicleCountByVehicleColor(string vehicleColor)
+        {
+            try
+            {
+                List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleColor(vehicleColor);
+                if (parking.Count > 0)
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking.Count));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle color again", parking.Count));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
+            }
+        }
     }
 }
