@@ -157,7 +157,7 @@ namespace ParkingLot.Controllers
         /// This method used for get all parking vehicles data using get mapping.
         /// </summary>
         /// <returns>All parking vehicles data.</returns>
-        [Route("GetAllVehicleDetails")]
+        [Route("AllVehicleDetails")]
         [HttpGet]
         public ActionResult GetAllParkingVehiclesData()
         {
