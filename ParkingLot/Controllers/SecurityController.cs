@@ -5,6 +5,7 @@
 namespace ParkingLot.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using Microsoft.AspNetCore.Mvc;
     using ParkingLotBusinessLayer;
@@ -96,6 +97,31 @@ namespace ParkingLot.Controllers
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
+            }
+        }
+
+        /// <summary>
+        /// This method used for get vehicle by vehicle color using get mapping.
+        /// </summary>
+        /// <param name="vehicleColor">Vehicle color.</param>
+        /// <returns>Parking details.</returns>
+        [Route("SearchVehicleByVehicleColor")]
+        [HttpGet]
+        public ActionResult GetVehicleByVehicleColor(string vehicleColor)
+        {
+            try
+            {
+                List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleColor(vehicleColor);
+                if (parking.Count > 0)
+                {
+                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+                }
+
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle color again", parking));
             }
             catch (Exception e)
             {
