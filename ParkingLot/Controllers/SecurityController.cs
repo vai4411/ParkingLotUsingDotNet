@@ -153,5 +153,30 @@ namespace ParkingLot.Controllers
                 return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
             }
         }
+
+        /// <summary>
+        /// This method used for get vehicle by slot number using get mapping.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        [Route("SearchVehicleBySlotNumber")]
+        [HttpGet]
+        public ActionResult GetVehicleBySlotNumber(int slotNumber)
+        {
+            try
+            {
+                ParkingDetails parking = this.parkingService.GetDetailsBySlotNumber(slotNumber);
+                if (parking == null)
+                {
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                }
+
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
+            }
+        }
     }
 }
