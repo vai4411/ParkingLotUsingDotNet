@@ -33,7 +33,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="parking">Parking object.</param>
         /// <returns>Action result.</returns>
-        [Route("ParkVehicle")]
+        [Route("park")]
         [HttpPost]
         public ActionResult ParkVehicle([FromBody] Parking parking)
         {
@@ -58,7 +58,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Action result.</returns>
-        [Route("Unpark")]
+        [Route("unPark")]
         [HttpPut]
         public ActionResult UnParkVehicle(int slotNumber)
         {

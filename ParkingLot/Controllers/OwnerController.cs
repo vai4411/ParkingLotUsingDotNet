@@ -34,7 +34,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="parking">Parking object.</param>
         /// <returns>Action result.</returns>
-        [Route("ParkVehicle")]
+        [Route("park")]
         [HttpPost]
         public ActionResult ParkVehicle([FromBody] Parking parking)
         {
@@ -59,7 +59,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Action result.</returns>
-        [Route("Unpark")]
+        [Route("unPark")]
         [HttpPut]
         public ActionResult UnParkVehicle(int slotNumber)
         {
@@ -84,7 +84,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicleBySlotNumber")]
+        [Route("search/slotNumber")]
         [HttpGet]
         public ActionResult GetVehicleBySlotNumber(int slotNumber)
         {
@@ -109,7 +109,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicleByVehicleNumber")]
+        [Route("search/vehicleNumber")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {
@@ -133,7 +133,7 @@ namespace ParkingLot.Controllers
         /// This method used for get empty slots using get mapping.
         /// </summary>
         /// <returns>List of empty slots.</returns>
-        [Route("EmptySlots")]
+        [Route("emptySlots")]
         [HttpGet]
         public ActionResult GetEmptySlots()
         {
@@ -157,7 +157,7 @@ namespace ParkingLot.Controllers
         /// This method used for get all parking vehicles data using get mapping.
         /// </summary>
         /// <returns>All parking vehicles data.</returns>
-        [Route("AllVehicleDetails")]
+        [Route("allVehicleDetails")]
         [HttpGet]
         public ActionResult GetAllParkingVehiclesData()
         {

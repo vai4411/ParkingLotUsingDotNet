@@ -34,7 +34,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="parking">Parking object.</param>
         /// <returns>Action result.</returns>
-        [Route("ParkVehicle")]
+        [Route("park")]
         [HttpPost]
         public ActionResult ParkVehicle([FromBody] Parking parking)
         {
@@ -59,7 +59,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Action result.</returns>
-        [Route("Unpark")]
+        [Route("unPark")]
         [HttpPut]
         public ActionResult UnParkVehicle(int slotNumber)
         {
@@ -84,7 +84,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicleByVehicleNumber")]
+        [Route("search/vehicleNumber")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {
@@ -109,7 +109,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleColor">Vehicle color.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicleByVehicleColor")]
+        [Route("search/vehicleColor")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleColor(string vehicleColor)
         {
@@ -134,7 +134,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleType">Vehicle type.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicleByVehicleType")]
+        [Route("search/vehicleType")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleType(int vehicleType)
         {
@@ -159,7 +159,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [Route("SearchVehicleBySlotNumber")]
+        [Route("search/slotNumber")]
         [HttpGet]
         public ActionResult GetVehicleBySlotNumber(int slotNumber)
         {
@@ -184,7 +184,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleColor">Vehicle color.</param>
         /// <returns>Count of vehicles.</returns>
-        [Route("CountByVehicleColor")]
+        [Route("count/vehicleColor")]
         [HttpGet]
         public ActionResult GetTotalVehicleCountByVehicleColor(string vehicleColor)
         {
@@ -209,7 +209,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleType">Vehicle type.</param>
         /// <returns>Parking details.</returns>
-        [Route("CountByVehicleType")]
+        [Route("count/vehicleType")]
         [HttpGet]
         public ActionResult GetTotalVehicleCountByVehicleType(int vehicleType)
         {
