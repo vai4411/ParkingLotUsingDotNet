@@ -101,5 +101,15 @@ namespace ParkingLotBusinessLayer
         {
             return this.parkingRepository.GetDetailsByVehicleType(vehicleType);
         }
+
+        /// <summary>
+        /// This method used for delete data from slot number.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        public ParkingDetails DeleteDetailsBySlotNumber(int slotNumber)
+        {
+            return this.parkingRepository.DeleteDetailsBySlotNumber(slotNumber);
+        }
     }
 }

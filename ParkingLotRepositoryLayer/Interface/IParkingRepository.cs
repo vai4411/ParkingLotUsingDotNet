@@ -1,16 +1,16 @@
-﻿// <copyright file="IParkingService.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="IParkingRepository.cs" company="Bridgelabz">
+// Copyright (c) Bridgelabz. All rights reserved.
 // </copyright>
 
-namespace ParkingLotBusinessLayer
+namespace ParkingLotRepositoryLayer
 {
     using System.Collections.Generic;
     using ParkingLotModelLayer;
 
     /// <summary>
-    /// This interface used to encapsulate service class.
+    /// This interface used to encapsulate repository class.
     /// </summary>
-    public interface IParkingService
+    public interface IParkingRepository
     {
         /// <summary>
         /// This method used for parking new vehicle in parking lot.
@@ -65,5 +65,12 @@ namespace ParkingLotBusinessLayer
         /// <param name="vehicleType">Vehicle type.</param>
         /// <returns>Parking details.</returns>
         List<ParkingDetails> GetDetailsByVehicleType(int vehicleType);
+
+        /// <summary>
+        /// This method used for delete details by vehicle number.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        ParkingDetails DeleteDetailsBySlotNumber(int slotNumber);
     }
 }

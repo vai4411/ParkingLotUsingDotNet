@@ -84,7 +84,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [Route("search/slotNumber")]
+        [Route("search/{slotNumber}")]
         [HttpGet]
         public ActionResult GetVehicleBySlotNumber(int slotNumber)
         {
@@ -109,7 +109,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("search/vehicleNumber")]
+        [Route("search/&vehicleNumber={vehicleNumber}")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {
@@ -170,6 +170,31 @@ namespace ParkingLot.Controllers
                 }
 
                 return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "No record found", vehiclesdata));
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
+            }
+        }
+
+        /// <summary>
+        /// This method used for delete vehicle by slot number using get mapping.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        [Route("delete/{slotNumber}")]
+        [HttpDelete]
+        public ActionResult DeleteVehicleBySlotNumber(int slotNumber)
+        {
+            try
+            {
+                ParkingDetails parking = this.parkingService.DeleteDetailsBySlotNumber(slotNumber);
+                if (parking == null)
+                {
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                }
+
+                return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details delete successfully...", parking));
             }
             catch (Exception e)
             {

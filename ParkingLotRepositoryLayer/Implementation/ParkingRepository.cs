@@ -346,5 +346,42 @@ namespace ParkingLotRepositoryLayer
                 throw new Exception(e.Message);
             }
         }
+
+        /// <summary>
+        /// This method used for delete data from slot number.
+        /// </summary>
+        /// <param name="slotNumber">Slot number.</param>
+        /// <returns>Parking details.</returns>
+        public ParkingDetails DeleteDetailsBySlotNumber(int slotNumber)
+        {
+            try
+            {
+                using (this.conn)
+                {
+                    ParkingDetails parkingDetails = new ParkingDetails();
+                    SqlCommand cmd = new SqlCommand("spDeleteVehicleBySlotNumber", this.conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SlotNumber", slotNumber);
+                    this.conn.Open();
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while (sqlDataReader.Read())
+                        {
+                            parkingDetails = this.VehicleDetails(sqlDataReader);
+                        }
+
+                        this.conn.Close();
+                        return parkingDetails;
+                    }
+
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
