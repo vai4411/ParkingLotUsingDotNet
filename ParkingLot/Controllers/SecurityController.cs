@@ -84,7 +84,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("search/&vehicleNumber={vehicleNumber}")]
+        [Route("search/{vehicleNumber}")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {
@@ -97,31 +97,6 @@ namespace ParkingLot.Controllers
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
-            }
-            catch (Exception e)
-            {
-                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
-            }
-        }
-
-        /// <summary>
-        /// This method used for get vehicle by vehicle color using get mapping.
-        /// </summary>
-        /// <param name="vehicleColor">Vehicle color.</param>
-        /// <returns>Parking details.</returns>
-        [Route("search/&vehicleColor={vehicleColor}")]
-        [HttpGet]
-        public ActionResult GetVehicleByVehicleColor(string vehicleColor)
-        {
-            try
-            {
-                List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleColor(vehicleColor);
-                if (parking.Count > 0)
-                {
-                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
-                }
-
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle color again", parking));
             }
             catch (Exception e)
             {
@@ -172,31 +147,6 @@ namespace ParkingLot.Controllers
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
-            }
-            catch (Exception e)
-            {
-                return this.BadRequest(new ResponseEntity(HttpStatusCode.BadRequest, e.Message));
-            }
-        }
-
-        /// <summary>
-        /// This method used for get vehicle count by vehicle color using get mapping.
-        /// </summary>
-        /// <param name="vehicleColor">Vehicle color.</param>
-        /// <returns>Count of vehicles.</returns>
-        [Route("count/&vehicleColor={vehicleColor}")]
-        [HttpGet]
-        public ActionResult GetTotalVehicleCountByVehicleColor(string vehicleColor)
-        {
-            try
-            {
-                List<ParkingDetails> parking = this.parkingService.GetDetailsByVehicleColor(vehicleColor);
-                if (parking.Count > 0)
-                {
-                    return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking.Count));
-                }
-
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check vehicle color again", parking.Count));
             }
             catch (Exception e)
             {

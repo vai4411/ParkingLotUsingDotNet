@@ -109,7 +109,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("search/&vehicleNumber={vehicleNumber}")]
+        [Route("search/{vehicleNumber}")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {

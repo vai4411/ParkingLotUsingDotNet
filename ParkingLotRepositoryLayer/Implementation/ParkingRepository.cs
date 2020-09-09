@@ -47,8 +47,7 @@ namespace ParkingLotRepositoryLayer
             parkingDetails.DriverType = Convert.ToInt32(sqlDataReader["DRIVER_TYPE"]);
             parkingDetails.EntryTime = sqlDataReader["Entry_Time"].ToString();
             parkingDetails.ExitTime = sqlDataReader["Exit_Time"].ToString();
-            parkingDetails.VehicleColor = sqlDataReader["VEHICLE_COLOR"].ToString();
-            parkingDetails.ParkingCharge = sqlDataReader["PARKING_CHARGE"].ToString();
+            parkingDetails.ParkingCharge = Convert.ToInt32(sqlDataReader["PARKING_CHARGE"]);
             return parkingDetails;
         }
 
@@ -63,6 +62,7 @@ namespace ParkingLotRepositoryLayer
             {
                 using (this.conn)
                 {
+                    ParkingDetails parkingDetails = new ParkingDetails();
                     SqlCommand cmd = new SqlCommand("spPark", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Slot_Number", parking.SlotNumber);
@@ -72,6 +72,7 @@ namespace ParkingLotRepositoryLayer
                     cmd.Parameters.AddWithValue("@Driver_Type", parking.DriverType);
                     this.conn.Open();
                     int result = cmd.ExecuteNonQuery();
+                    this.conn.Close();
                     if (result != 0)
                     {
                         return parking;
@@ -245,45 +246,6 @@ namespace ParkingLotRepositoryLayer
                     List<ParkingDetails> parkingData = new List<ParkingDetails>();
                     SqlCommand cmd = new SqlCommand("spGetParkingVehiclesData", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    this.conn.Open();
-                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
-                    if (sqlDataReader.HasRows)
-                    {
-                        while (sqlDataReader.Read())
-                        {
-                            ParkingDetails parkingDetails = new ParkingDetails();
-                            parkingDetails = this.VehicleDetails(sqlDataReader);
-                            parkingData.Add(parkingDetails);
-                        }
-
-                        this.conn.Close();
-                        return parkingData;
-                    }
-
-                    return null;
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// This method used for get details by vehicle number.
-        /// </summary>
-        /// <param name="vehicleColor">Vehicle color.</param>
-        /// <returns>Parking details.</returns>
-        public List<ParkingDetails> GetDetailsByVehicleColor(string vehicleColor)
-        {
-            try
-            {
-                using (this.conn)
-                {
-                    List<ParkingDetails> parkingData = new List<ParkingDetails>();
-                    SqlCommand cmd = new SqlCommand("spGetVehicleByVehicleColor", this.conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Vehicle_Color", vehicleColor);
                     this.conn.Open();
                     SqlDataReader sqlDataReader = cmd.ExecuteReader();
                     if (sqlDataReader.HasRows)

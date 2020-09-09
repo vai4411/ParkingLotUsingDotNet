@@ -53,13 +53,6 @@ namespace ParkingLotRepositoryLayer
         List<ParkingDetails> GetAllParkingVehiclesData();
 
         /// <summary>
-        /// This method used for get details by vehicle number.
-        /// </summary>
-        /// <param name="vehicleColor">Vehicle color.</param>
-        /// <returns>Parking details.</returns>
-        List<ParkingDetails> GetDetailsByVehicleColor(string vehicleColor);
-
-        /// <summary>
         /// This method used for get details by vehicle type.
         /// </summary>
         /// <param name="vehicleType">Vehicle type.</param>

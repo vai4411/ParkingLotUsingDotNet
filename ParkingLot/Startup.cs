@@ -9,9 +9,9 @@ namespace ParkingLot
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.OpenApi.Models;
     using ParkingLotBusinessLayer;
     using ParkingLotRepositoryLayer;
+    using Swashbuckle.AspNetCore.Swagger;
 
     /// <summary>
     /// This is start up class.
@@ -42,7 +42,10 @@ namespace ParkingLot
             services.AddSingleton<IConfiguration>(this.Configuration);
             services.AddTransient<IParkingRepository, ParkingRepository>();
             services.AddTransient<IParkingService, ParkingService>();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" }); });
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
         }
 
         /// <summary>
@@ -55,6 +58,11 @@ namespace ParkingLot
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI V1");
+                });
             }
             else
             {
@@ -63,15 +71,6 @@ namespace ParkingLot
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseSwagger(c => { c.SerializeAsV2 = true; });
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("../swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty;
-            });
         }
     }
 }

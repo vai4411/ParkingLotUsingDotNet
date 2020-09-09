@@ -5,6 +5,7 @@
 namespace ParkingLotBusinessLayer
 {
     using System.Collections.Generic;
+    using ParkingLotBusinessLayer.Implementation;
     using ParkingLotModelLayer;
     using ParkingLotRepositoryLayer;
 
@@ -14,6 +15,7 @@ namespace ParkingLotBusinessLayer
     public class ParkingService : IParkingService
     {
         private readonly IParkingRepository parkingRepository;
+        private readonly MSMQService mSMQService = new MSMQService();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParkingService"/> class.
@@ -31,7 +33,13 @@ namespace ParkingLotBusinessLayer
         /// <returns>Boolean result.</returns>
         public Parking ParkVehicle(Parking parking)
         {
-            return this.parkingRepository.ParkVehicle(parking);
+            Parking parkingDetails = this.parkingRepository.ParkVehicle(parking);
+            if (parkingDetails != null)
+            {
+                this.mSMQService.SendDataToQueue("Parked vehicle number: " + parkingDetails.VehicleNumber);
+            }
+
+            return parkingDetails;
         }
 
         /// <summary>
@@ -41,7 +49,14 @@ namespace ParkingLotBusinessLayer
         /// <returns>Boolean result.</returns>
         public ParkingDetails UnParkVehicle(int slotNumber)
         {
-            return this.parkingRepository.UnParkVehicle(slotNumber);
+            ParkingDetails parkingDetails = this.parkingRepository.UnParkVehicle(slotNumber);
+            if (parkingDetails != null)
+            {
+                this.mSMQService.SendDataToQueue("UnParked vehicle number: " + parkingDetails.VehicleNumber + " At time: "
+                    + parkingDetails.ExitTime + " Total charge: " + parkingDetails.ParkingCharge);
+            }
+
+            return parkingDetails;
         }
 
         /// <summary>
@@ -80,16 +95,6 @@ namespace ParkingLotBusinessLayer
         public List<ParkingDetails> GetAllParkingVehiclesData()
         {
             return this.parkingRepository.GetAllParkingVehiclesData();
-        }
-
-        /// <summary>
-        /// This method used for get parking vehicles data by vehicle color.
-        /// </summary>
-        /// /// <param name="vehicleColor">Vehicle color.</param>
-        /// <returns>Parking vehicles data.</returns>
-        public List<ParkingDetails> GetDetailsByVehicleColor(string vehicleColor)
-        {
-            return this.parkingRepository.GetDetailsByVehicleColor(vehicleColor);
         }
 
         /// <summary>
