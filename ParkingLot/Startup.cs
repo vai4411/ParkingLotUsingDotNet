@@ -44,7 +44,7 @@ namespace ParkingLot
             services.AddTransient<IParkingService, ParkingService>();
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+                options.SwaggerDoc("v1", new Info { Title = "PARKING LOT", Version = "v1" });
             });
         }
 
@@ -61,7 +61,7 @@ namespace ParkingLot
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PARKING LOT");
                 });
             }
             else

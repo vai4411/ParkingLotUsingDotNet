@@ -1,0 +1,6 @@
+Parked vehicle number: MH 09 999 At time: 9/9/2020 11:59:16 AM
+Parked vehicle number: MH 04 555 At time: 9/9/2020 6:41:44 PM
+
+UnParked vehicle number: MH 09 999 At time: 9/9/2020 6:42:14 PM Total charge: 413
+Parked vehicle number: MH 01421 At time: 9/10/2020 9:40:31 AM Parking id:8
+UnParked vehicle number: MH 01421 At time: 9/10/2020 9:40:52 AM Total charge: 100

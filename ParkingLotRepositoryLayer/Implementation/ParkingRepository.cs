@@ -56,7 +56,7 @@ namespace ParkingLotRepositoryLayer
         /// </summary>
         /// <param name="parking">Parking object.</param>
         /// <returns>Parking <see cref="object"/>.</returns>
-        public Parking ParkVehicle(Parking parking)
+        public ParkingDetails ParkVehicle(Parking parking)
         {
             try
             {
@@ -71,11 +71,16 @@ namespace ParkingLotRepositoryLayer
                     cmd.Parameters.AddWithValue("@Parking_Type", parking.ParkingType);
                     cmd.Parameters.AddWithValue("@Driver_Type", parking.DriverType);
                     this.conn.Open();
-                    int result = cmd.ExecuteNonQuery();
-                    this.conn.Close();
-                    if (result != 0)
+                    SqlDataReader sqlDataReader = cmd.ExecuteReader();
+                    if (sqlDataReader.HasRows)
                     {
-                        return parking;
+                        while (sqlDataReader.Read())
+                        {
+                            parkingDetails = this.VehicleDetails(sqlDataReader);
+                        }
+
+                        this.conn.Close();
+                        return parkingDetails;
                     }
 
                     return null;
@@ -99,7 +104,7 @@ namespace ParkingLotRepositoryLayer
                 using (this.conn)
                 {
                     ParkingDetails parkingDetails = new ParkingDetails();
-                    SqlCommand cmd = new SqlCommand("spUnPark", this.conn);
+                    SqlCommand cmd = new SqlCommand("spUnParkVehicles", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Slot_Number", slotNumber);
                     this.conn.Open();
@@ -138,7 +143,7 @@ namespace ParkingLotRepositoryLayer
                     ParkingDetails parkingDetails = new ParkingDetails();
                     SqlCommand cmd = new SqlCommand("spGetVehicleBySlotNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SlotNumber", slotNumber);
+                    cmd.Parameters.AddWithValue("@Slot_Number", slotNumber);
                     this.conn.Open();
                     SqlDataReader sqlDataReader = cmd.ExecuteReader();
                     if (sqlDataReader.HasRows)
@@ -175,7 +180,7 @@ namespace ParkingLotRepositoryLayer
                     ParkingDetails parkingDetails = new ParkingDetails();
                     SqlCommand cmd = new SqlCommand("spGetVehicleByVehicleNumber", this.conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@VehicleNumber", vehicleNumber);
+                    cmd.Parameters.AddWithValue("@Vehicle_Number", vehicleNumber);
                     this.conn.Open();
                     SqlDataReader sqlDataReader = cmd.ExecuteReader();
                     if (sqlDataReader.HasRows)

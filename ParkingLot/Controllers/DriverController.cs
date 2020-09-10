@@ -39,10 +39,10 @@ namespace ParkingLot.Controllers
         {
             try
             {
-                Parking result = this.parkingService.ParkVehicle(parking);
+                ParkingDetails result = this.parkingService.ParkVehicle(parking);
                 if (result == null)
                 {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again"));
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle parked successfully", result));
@@ -67,7 +67,7 @@ namespace ParkingLot.Controllers
                 ParkingDetails result = this.parkingService.UnParkVehicle(slotNumber);
                 if (result == null)
                 {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again"));
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));

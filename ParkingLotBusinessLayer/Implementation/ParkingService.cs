@@ -31,12 +31,13 @@ namespace ParkingLotBusinessLayer
         /// </summary>
         /// <param name="parking">Parking data.</param>
         /// <returns>Boolean result.</returns>
-        public Parking ParkVehicle(Parking parking)
+        public ParkingDetails ParkVehicle(Parking parking)
         {
-            Parking parkingDetails = this.parkingRepository.ParkVehicle(parking);
+            ParkingDetails parkingDetails = this.parkingRepository.ParkVehicle(parking);
             if (parkingDetails != null)
             {
-                this.mSMQService.SendDataToQueue("Parked vehicle number: " + parkingDetails.VehicleNumber);
+                this.mSMQService.SendDataToQueue("Parked vehicle number: " + parkingDetails.VehicleNumber + " At time: "
+                    + parkingDetails.EntryTime + " Parking id:" + parkingDetails.ParkingId);
             }
 
             return parkingDetails;

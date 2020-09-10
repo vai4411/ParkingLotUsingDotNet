@@ -21,7 +21,7 @@ namespace ParkingLotBusinessLayer.Implementation
         public MSMQService()
         {
             this.messageQueue = new MessageQueue();
-            this.messageQueue.Path = @".\private$\Bills";
+            this.messageQueue.Path = @".\private$\ParkingLot";
             if (MessageQueue.Exists(this.messageQueue.Path))
             {
                 this.messageQueue = new MessageQueue(this.messageQueue.Path);
@@ -56,7 +56,7 @@ namespace ParkingLotBusinessLayer.Implementation
             {
                 var message = this.messageQueue.EndReceive(e.AsyncResult);
                 string data = message.Body.ToString();
-                using (StreamWriter file = new StreamWriter(Directory.GetCurrentDirectory() + @"\ParkingRecords.txt"))
+                using (StreamWriter file = new StreamWriter(Directory.GetCurrentDirectory() + @"\ParkingRecords.txt", true))
                 {
                     file.WriteLine(data);
                 }

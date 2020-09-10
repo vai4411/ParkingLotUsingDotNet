@@ -40,10 +40,10 @@ namespace ParkingLot.Controllers
         {
             try
             {
-                Parking result = this.parkingService.ParkVehicle(parking);
+                ParkingDetails result = this.parkingService.ParkVehicle(parking);
                 if (result == null)
                 {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again"));
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle parked successfully", result));
@@ -68,7 +68,7 @@ namespace ParkingLot.Controllers
                 ParkingDetails result = this.parkingService.UnParkVehicle(slotNumber);
                 if (result == null)
                 {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again", result));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Please check details again"));
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle unParked successfully", result));
@@ -84,7 +84,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [Route("search/{slotNumber}")]
+        [Route("search/&slotNumber={slotNumber}")]
         [HttpGet]
         public ActionResult GetVehicleBySlotNumber(int slotNumber)
         {
@@ -93,7 +93,7 @@ namespace ParkingLot.Controllers
                 ParkingDetails parking = this.parkingService.GetDetailsBySlotNumber(slotNumber);
                 if (parking == null)
                 {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again"));
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
@@ -109,7 +109,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="vehicleNumber">Vehicle number.</param>
         /// <returns>Parking details.</returns>
-        [Route("search/{vehicleNumber}")]
+        [Route("search/&vehicleNumber={vehicleNumber}")]
         [HttpGet]
         public ActionResult GetVehicleByVehicleNumber(string vehicleNumber)
         {
@@ -118,7 +118,7 @@ namespace ParkingLot.Controllers
                 ParkingDetails parking = this.parkingService.GetDetailsByVehicleNumber(vehicleNumber);
                 if (parking == null)
                 {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again"));
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details found", parking));
@@ -145,7 +145,7 @@ namespace ParkingLot.Controllers
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Empty slots found", emptySlots));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Empty slots not found", emptySlots));
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Empty slots not found"));
             }
             catch (Exception e)
             {
@@ -169,7 +169,7 @@ namespace ParkingLot.Controllers
                     return this.Ok(new ResponseEntity(HttpStatusCode.OK, "All parking vehicles record found", vehiclesdata));
                 }
 
-                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "No record found", vehiclesdata));
+                return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "No record found"));
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@ namespace ParkingLot.Controllers
         /// </summary>
         /// <param name="slotNumber">Slot number.</param>
         /// <returns>Parking details.</returns>
-        [Route("delete/{slotNumber}")]
+        [Route("delete/&slotNumber={slotNumber}")]
         [HttpDelete]
         public ActionResult DeleteVehicleBySlotNumber(int slotNumber)
         {
@@ -191,7 +191,7 @@ namespace ParkingLot.Controllers
                 ParkingDetails parking = this.parkingService.DeleteDetailsBySlotNumber(slotNumber);
                 if (parking == null)
                 {
-                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again", parking));
+                    return this.NotFound(new ResponseEntity(HttpStatusCode.NotFound, "Plaese check slot number again"));
                 }
 
                 return this.Ok(new ResponseEntity(HttpStatusCode.OK, "Vehicle details delete successfully...", parking));
